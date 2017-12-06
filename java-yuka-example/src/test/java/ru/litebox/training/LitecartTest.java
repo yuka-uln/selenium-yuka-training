@@ -17,6 +17,14 @@ import java.io.File;
 
 public class LitecartTest {
 
+    private enum SelectedBrowser {
+        CHROME, FIREFOX, IE, EDGE, FIREFOX_LEGACY, FIREFOX_NIGHTLY
+    }
+
+    private static final SelectedBrowser SELECTED_BROWSER = SelectedBrowser.CHROME; // браузер выбирать здесь
+    private static final String FIREFOX_PATH = "c:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    private static final String FIREFOX_LEGACY_PATH = "c:\\Program Files (x86)\\Mozilla Firefox 52 ESR EO\\firefox.exe";
+    private static final String FIREFOX_NIGHTLY_PATH = "C:\\Program Files\\Nightly\\firefox.exe";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
     private WebDriver driver;
@@ -24,14 +32,31 @@ public class LitecartTest {
 
     @Before
     public void start() {
-        FirefoxOptions options = new FirefoxOptions()
-                .setLegacy(true)
-                .setBinary(new FirefoxBinary(new File("c:\\Program Files (x86)\\Mozilla Firefox 52 ESR EO\\firefox.exe")));
 
-//        driver = new ChromeDriver();
-        driver = new FirefoxDriver(options);
-//        driver = new InternetExplorerDriver();
-//        driver = new EdgeDriver();
+        switch (SELECTED_BROWSER) {
+            case CHROME:
+                driver = new ChromeDriver();
+                break;
+            case IE:
+                driver = new InternetExplorerDriver();
+                break;
+            case EDGE:
+                driver = new EdgeDriver();
+                break;
+            case FIREFOX:
+                driver = new FirefoxDriver(new FirefoxOptions()
+                        .setBinary(new FirefoxBinary(new File(FIREFOX_PATH))));
+                break;
+            case FIREFOX_LEGACY:
+                driver = new FirefoxDriver(new FirefoxOptions()
+                        .setLegacy(true)
+                        .setBinary(new FirefoxBinary(new File(FIREFOX_LEGACY_PATH))));
+                break;
+            case FIREFOX_NIGHTLY:
+                driver = new FirefoxDriver(new FirefoxOptions()
+                        .setBinary(new FirefoxBinary(new File(FIREFOX_NIGHTLY_PATH))));
+                break;
+        }
 
         wait = new WebDriverWait(driver, 10);
     }

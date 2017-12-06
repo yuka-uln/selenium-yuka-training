@@ -7,9 +7,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 public class LitecartTest {
 
@@ -20,10 +24,15 @@ public class LitecartTest {
 
     @Before
     public void start() {
+        FirefoxOptions options = new FirefoxOptions()
+                .setLegacy(true)
+                .setBinary(new FirefoxBinary(new File("c:\\Program Files (x86)\\Mozilla Firefox 52 ESR EO\\firefox.exe")));
+
 //        driver = new ChromeDriver();
-//        driver = new FirefoxDriver();
+        driver = new FirefoxDriver(options);
 //        driver = new InternetExplorerDriver();
-        driver = new EdgeDriver();
+//        driver = new EdgeDriver();
+
         wait = new WebDriverWait(driver, 10);
     }
 

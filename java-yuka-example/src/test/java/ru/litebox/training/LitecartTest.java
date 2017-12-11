@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 
-public class LitecartTest {
+public class LitecartTest extends BaseTest {
 
     private enum SelectedBrowser {
         CHROME, FIREFOX, IE, EDGE, FIREFOX_LEGACY, FIREFOX_NIGHTLY
@@ -25,10 +25,6 @@ public class LitecartTest {
     private static final String FIREFOX_PATH = "c:\\Program Files\\Mozilla Firefox\\firefox.exe";
     private static final String FIREFOX_LEGACY_PATH = "c:\\Program Files (x86)\\Mozilla Firefox 52 ESR EO\\firefox.exe";
     private static final String FIREFOX_NIGHTLY_PATH = "C:\\Program Files\\Nightly\\firefox.exe";
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin";
-    private WebDriver driver;
-    private WebDriverWait wait;
 
     @Before
     public void start() {
@@ -59,10 +55,6 @@ public class LitecartTest {
         }
 
         wait = new WebDriverWait(driver, 10);
-    }
-
-    private boolean loggedIn() {
-        return !driver.findElements(By.id("sidebar")).isEmpty();
     }
 
     private void loginTest() {

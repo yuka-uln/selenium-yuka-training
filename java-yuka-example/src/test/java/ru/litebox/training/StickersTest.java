@@ -9,9 +9,9 @@ import java.util.List;
 
 public class StickersTest extends BaseTest {
 
-    private String productBox = "//li[contains(@class, 'product')]";
-    private String stickerRelativeLocator = ".//div[contains(@class, 'sticker')]";
-    private String nameRelativeLocator = ".//div[contains(@class, 'name')]";
+    private String productBox = "//li[contains(@class, 'product')]"; // либо cssSelector: "li.product"
+    private String stickerRelativeLocator = ".//div[contains(@class, 'sticker')]"; // либо cssSelector: "div.sticker"
+    private String nameRelativeLocator = ".//div[contains(@class, 'name')]"; // либо cssSelector: "div.name"
 
     @Test
     public void checkStickers() {

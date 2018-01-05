@@ -12,7 +12,6 @@ public class MenuCheckingTest extends BaseTest {
 
     private String menuItems = "//ul[@id='box-apps-menu']/li/a";
     private String innerMenuItems = "//ul[@class='docs']/li/a";
-    private String menuItemByName = "//ul[@id='box-apps-menu']/li/a[span[@class='name' and text()='%s']]";
     private String innerMenuItemByName = "//ul[@class='docs']/li/a[span[@class='name' and text()='%s']]";
     private String header = "//h1";
 
@@ -28,7 +27,7 @@ public class MenuCheckingTest extends BaseTest {
 
     private void checkMenuItem(String itemName, int menuSize) {
         System.out.println("Жмём пункт меню: " + itemName);
-        driver.findElement(By.xpath(String.format(menuItemByName, itemName))).click();
+        gotoMenu(itemName);
         checkHeader();
         List<WebElement> innerMenu = driver.findElements(By.xpath(innerMenuItems));
         List<String> innerItemNames = innerMenu.stream().map(WebElement::getText).collect(Collectors.toList());

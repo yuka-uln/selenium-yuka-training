@@ -1,5 +1,6 @@
 package ru.litebox.training;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,8 @@ public class BaseTest {
     protected static final String PASSWORD = "admin";
     protected WebDriver driver;
     protected WebDriverWait wait;
+
+    private String menuItemByName = "//ul[@id='box-apps-menu']/li/a[span[@class='name' and text()='%s']]";
 
     protected boolean loggedIn() {
         return !driver.findElements(By.id("sidebar")).isEmpty();
@@ -33,5 +36,18 @@ public class BaseTest {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
         Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
+    }
+
+    public void gotoMenu(String itemName) {
+        driver.findElement(By.xpath(String.format(menuItemByName, itemName))).click();
+    }
+
+    protected void assertTitleStartsWith(String expected) {
+        String real = driver.getTitle();
+        Assert.assertNotNull("Пустой title у страницы!", real);
+        wait.until(driver -> {
+            String title = driver.getTitle();
+            return (title != null) && title.startsWith(expected);
+        });
     }
 }

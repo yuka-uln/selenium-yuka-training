@@ -1,6 +1,5 @@
 package ru.litebox.training;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -43,14 +42,5 @@ public class BaseTest {
 
     public void gotoMenu(String itemName) {
         driver.findElement(By.xpath(String.format(menuItemByName, itemName))).click();
-    }
-
-    protected void assertTitleStartsWith(String expected) {
-        String real = driver.getTitle();
-        Assert.assertNotNull("Пустой title у страницы!", real);
-        wait.until(driver -> {
-            String title = driver.getTitle();
-            return (title != null) && title.startsWith(expected);
-        });
     }
 }

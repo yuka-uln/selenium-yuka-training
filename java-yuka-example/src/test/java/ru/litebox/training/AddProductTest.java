@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.io.File;
@@ -57,7 +58,7 @@ public class AddProductTest extends BaseTest {
         String productName = "Bot Product " + productNumber;
         System.out.println("Проверяем, заведётся ли новый товар \"" + productName + "\"...");
         gotoMenu("Catalog");
-        assertTitleStartsWith("Catalog");
+        wait.until(ExpectedConditions.titleContains("Catalog"));
         driver.findElement(By.xpath(addNewProductLink)).click();
         wait.until(d -> d.findElement(By.xpath(enabledInput)).isDisplayed());
 
@@ -108,6 +109,7 @@ public class AddProductTest extends BaseTest {
         driver.findElement(By.xpath(dateValidToInput)).sendKeys(Keys.HOME + "22.11.2019");
 
         // вкладка Information
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(informationTabLink)));
         driver.findElement(By.xpath(informationTabLink)).click();
         wait.until(d -> d.findElement(By.xpath(manufacturerSelect)).isDisplayed());
 

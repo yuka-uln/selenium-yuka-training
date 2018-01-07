@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.Comparator;
@@ -42,7 +43,7 @@ public class GeoSortingTest extends BaseTest {
     private void checkSortingCountries() {
         System.out.println("Проверяем сортировку стран...");
         gotoMenu("Countries");
-        assertTitleStartsWith("Countries");
+        wait.until(ExpectedConditions.titleContains("Countries"));
 
         Comparator<WebElement> comparator;
         comparator = Comparator.comparing(element -> element.getAttribute("class")); // сначала в списке enabled страны, потом disabled
@@ -95,9 +96,9 @@ public class GeoSortingTest extends BaseTest {
     private void checkZones(String country) {
         System.out.println("Проверяем сортировку зон в стране с кодом " + country + "...");
         gotoMenu("Countries");
-        assertTitleStartsWith("Countries");
+        wait.until(ExpectedConditions.titleContains("Countries"));
         driver.findElement(By.xpath(String.format(countryLinkByCode, country))).click();
-        assertTitleStartsWith("Edit Country");
+        wait.until(ExpectedConditions.titleContains("Edit Country"));
 
         List<WebElement> zoneElements = driver.findElements(By.xpath(zoneName));
         List<String> zoneNames = zoneElements
@@ -120,7 +121,7 @@ public class GeoSortingTest extends BaseTest {
     private void checkSortingGeoZones() {
         System.out.println("Проверяем сортировку геозон...");
         gotoMenu("Geo Zones");
-        assertTitleStartsWith("Geo Zones");
+        wait.until(ExpectedConditions.titleContains("Geo Zones"));
 
         List<WebElement> zoneRows = driver.findElements(By.xpath(rowLocator));
         for (int i = 0; i < zoneRows.size(); i++) {
@@ -136,9 +137,9 @@ public class GeoSortingTest extends BaseTest {
     private void checkGeoZone(int zoneNumber) {
         System.out.println(String.format("Проверяем сортировку зон в геозоне № %d...", zoneNumber));
         gotoMenu("Geo Zones");
-        assertTitleStartsWith("Geo Zones");
+        wait.until(ExpectedConditions.titleContains("Geo Zones"));
         driver.findElement(By.xpath(String.format(geoZoneLinkByNumber, zoneNumber))).click();
-        assertTitleStartsWith("Edit Geo Zone");
+        wait.until(ExpectedConditions.titleContains("Edit Geo Zone"));
 
         List<String> countryNames = driver
                 .findElements(By.xpath(countryInGeoZone))

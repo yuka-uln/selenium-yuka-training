@@ -20,7 +20,7 @@ public class GeoSortingTest extends BaseTest {
     private String zoneName = "//td[@id='content']//table[@class='dataTable']/tbody/tr/td[3][input[@type='hidden']]";
     private String countryLinkByCode = "//td[@id='content']//table[@class='dataTable']//tr[contains(@class, 'row')]/td[4][text()='%s']/../td[5]/a";
     private String geoZoneLinkByNumber = "//td[@id='content']//table[@class='dataTable']//tr[contains(@class, 'row')][%d]/td[5]/a";
-    private String countryInGeoZone = "//table[@id='table-zones']//tr[td[4]]/td[2]/select";
+    private String selectedCountryInGeoZone = "//table[@id='table-zones']//tr[td[4]]/td[2]/select/option[@selected='selected']";
     private String zoneInGeoZone = "//table[@id='table-zones']//tr[td[4]]/td[3]/select";
 
     @Test
@@ -142,9 +142,9 @@ public class GeoSortingTest extends BaseTest {
         wait.until(ExpectedConditions.titleContains("Edit Geo Zone"));
 
         List<String> countryNames = driver
-                .findElements(By.xpath(countryInGeoZone))
+                .findElements(By.xpath(selectedCountryInGeoZone))
                 .stream()
-                .map(element -> (new Select(element)).getFirstSelectedOption().getAttribute("textContent"))
+                .map(element -> (element.getAttribute("textContent")))
                 .collect(Collectors.toList());
 
         List<String> zoneNames = driver

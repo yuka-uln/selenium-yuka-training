@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
@@ -37,10 +38,24 @@ public class BaseTest {
     public void start() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
-        Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            checkBrowserLogs();
+            driver.quit();
+        }));
     }
 
     public void gotoMenu(String itemName) {
         driver.findElement(By.xpath(String.format(menuItemByName, itemName))).click();
+    }
+
+    protected void checkBrowserLogs() {
+        LogEntries browserLogs;
+        browserLogs = driver.manage().logs().get("browser");
+        if (browserLogs.getAll().isEmpty()) {
+            System.out.println("Логи браузера пусты.");
+        } else {
+            System.out.println("Внимание! Логи браузера:");
+            browserLogs.forEach(System.out::println);
+        }
     }
 }
